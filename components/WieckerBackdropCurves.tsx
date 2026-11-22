@@ -16,7 +16,7 @@ export function WieckerBackdropCurves({
 }: BackdropCurvesProps) {
   return (
     <div
-      className="pointer-events-none absolute top-0 left-0 right-0 h-[680px] overflow-hidden"
+      className="pointer-events-none absolute top-0 left-0 right-0 h-full min-h-[680px] overflow-hidden"
       aria-hidden="true"
     >
       <svg

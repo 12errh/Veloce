@@ -88,20 +88,21 @@ export function FastSpeedTestApp() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen veloce-matte-bg text-[#F3EFE6] flex flex-col">
+      <div className="h-screen overflow-hidden veloce-matte-bg text-[#F3EFE6] flex flex-col">
         <WieckerHeader
           onRestartTest={restartTest}
           onOpenPrivacy={() => setActiveModal('privacy')}
         />
 
         {/* Hero Speedometer Stage Only */}
-        <main className="relative flex-1 flex flex-col justify-center overflow-x-clip">
+        <main className="relative flex-1 overflow-y-auto overflow-x-clip scroll-smooth">
           <WieckerBackdropCurves
             stabilityPct={stabilityPct}
             completionPct={completionPct}
           />
 
-          <div className="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-2 sm:pt-5 pb-8 sm:pb-10">
+          <div className="min-h-full flex flex-col justify-center">
+            <div className="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-2 sm:pt-5 pb-8 sm:pb-10">
             {/* Hero Headline assembles cleanly with upward clip reveal */}
             <motion.div
               initial={{opacity: 0, y: 20, clipPath: 'inset(0 0 100% 0)'}}
@@ -177,6 +178,7 @@ export function FastSpeedTestApp() {
               />
             )}
           </AnimatePresence>
+        </div>
         </div>
       </main>
 
