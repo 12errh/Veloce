@@ -55,7 +55,7 @@ export function WieckerTelemetryDrawer({
       exit={{opacity: 0, y: -8}}
       transition={{duration: 0.2}}
       data-testid="more-info-panel"
-      className="w-full max-w-[860px] mx-auto mt-6 bg-[#101014]/95 border border-[#29272E] rounded-[6px] p-5 sm:p-6 text-[#F3EFE6] shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+      className="w-full max-w-[860px] mx-auto mt-6 rounded-[8px] border border-[#29272E] bg-[#101014] text-[#F3EFE6] p-5 sm:p-6 shadow-[inset_0_2px_0_0_#B91C1C,0_40px_100px_rgba(0,0,0,0.8)]"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#232127]">
         <div className="min-w-0 flex-1">

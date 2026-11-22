@@ -180,10 +180,8 @@ export function FastSpeedTestApp() {
               exit={{opacity: 0, scale: 0.94, y: 16}}
               transition={{duration: 0.26, ease: [0.16, 1, 0.3, 1]}}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[900px] max-h-[85vh] overflow-y-auto rounded-2xl border border-[#2D2A2E] bg-gradient-to-b from-[#141418] to-[#0B0B0F] shadow-[0_40px_120px_rgba(0,0,0,0.85)]"
+              className="w-full max-w-[900px] max-h-[85vh] overflow-y-auto"
             >
-              <div className="sticky top-0 z-20 h-[3px] w-full bg-gradient-to-r from-[#7F1D1D] via-[#DC2626] to-[#C5A059] rounded-t-2xl" />
-              <div className="px-5 sm:px-7 pt-5 pb-6">
                 <WieckerTelemetryDrawer
                   state={state}
                   settings={settings}
@@ -198,7 +196,6 @@ export function FastSpeedTestApp() {
                   onClose={handleToggleDetails}
                   t={t}
                 />
-              </div>
             </motion.div>
           </motion.div>
         )}

@@ -90,7 +90,7 @@ export function InfoModal({kind, onClose, state, t}: InfoModalProps) {
             exit={{opacity: 0, scale: 0.97, y: 6}}
             transition={{duration: 0.18, ease: [0.16, 1, 0.3, 1]}}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[520px] max-h-[85vh] overflow-y-auto rounded-[6px] bg-[#101014] border border-[#29272E] shadow-2xl p-6 text-[#F3EFE6]"
+            className="w-full max-w-[520px] max-h-[85vh] overflow-y-auto rounded-[8px] border border-[#29272E] bg-[#101014] text-[#F3EFE6] p-6 shadow-[inset_0_2px_0_0_#B91C1C,0_40px_100px_rgba(0,0,0,0.8)]"
           >
             <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#232127]">
               <h2
