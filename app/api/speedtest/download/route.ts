@@ -3,7 +3,7 @@ import {NextRequest} from 'next/server';
 export const dynamic = 'force-dynamic';
 
 // Pre-build a 512 KB pseudo-random incompressible chunk once at module load
-const CHUNK_SIZE = 512 * 1024;
+const CHUNK_SIZE = 1024 * 1024;
 const NOISE_CHUNK = new Uint8Array(CHUNK_SIZE);
 {
   let seed = 0x9e3779b9;

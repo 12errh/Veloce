@@ -306,7 +306,7 @@ export function useSpeedTest() {
         for (let i = 0; i < needed; i++) {
           spawnUploadWorker();
         }
-      }, 380);
+      }, 250);
 
       let pingInFlight = false;
       const pingTimer = cfg.measureLoadedLatencyDuringUpload
@@ -343,8 +343,8 @@ export function useSpeedTest() {
 
           // Exclude initial 350ms OS TCP buffer fill burst once enough steady samples exist
           const steadySamples =
-            elapsed > 1400
-              ? samples.filter((s) => s.timestampMs - startTime >= 350)
+            elapsed > 1500
+              ? samples.filter((s) => s.timestampMs - startTime >= 1000)
               : samples;
           const activeSamples = steadySamples.length >= 2 ? steadySamples : samples;
 
@@ -390,10 +390,23 @@ export function useSpeedTest() {
 
       if (runId !== runIdRef.current) return;
 
+      const finalUploadMbps = (() => {
+        const slice = recentBuckets.slice(-5);
+        if (slice.length === 0) return latestMbps;
+        const sorted = [...slice].sort((a, b) => a - b);
+        const mid = Math.floor(sorted.length / 2);
+        const med =
+          sorted.length % 2 === 0
+            ? (sorted[mid - 1] + sorted[mid]) / 2
+            : sorted[mid];
+        return med > 0 ? med : latestMbps;
+      })();
+
       setState((prev) => ({
         ...prev,
         phase: 'complete',
         pausedFrom: null,
+        uploadMbps: finalUploadMbps,
         uploadedBytes: totalUploadedBytes,
         progressPct: 100,
       }));
@@ -505,7 +518,8 @@ export function useSpeedTest() {
               {
                 cache: 'no-store',
                 signal: controller.signal,
-              }
+                priority: 'high',
+              } as RequestInit
             );
             if (!res.ok || !res.body) {
               failedStreams++;
@@ -547,7 +561,7 @@ export function useSpeedTest() {
         for (let i = 0; i < extra; i++) {
           void spawnDownloadWorker();
         }
-      }, 300);
+      }, 200);
 
       let pingBusy = false;
       const loadedPingInterval = window.setInterval(async () => {
@@ -581,8 +595,8 @@ export function useSpeedTest() {
           if (samples.length > 90) samples.shift();
 
           const steadySamples =
-            elapsed > 1400
-              ? samples.filter((s) => s.timestampMs - startTime >= 250)
+            elapsed > 1500
+              ? samples.filter((s) => s.timestampMs - startTime >= 1000)
               : samples;
           const activeSamples = steadySamples.length >= 2 ? steadySamples : samples;
 
@@ -637,9 +651,22 @@ export function useSpeedTest() {
         return;
       }
 
+      const finalDownloadMbps = (() => {
+        const slice = recentBuckets.slice(-6);
+        if (slice.length === 0) return latestMbps;
+        const sorted = [...slice].sort((a, b) => a - b);
+        const mid = Math.floor(sorted.length / 2);
+        const med =
+          sorted.length % 2 === 0
+            ? (sorted[mid - 1] + sorted[mid]) / 2
+            : sorted[mid];
+        return med > 0 ? med : latestMbps;
+      })();
+
       setState((prev) => ({
         ...prev,
         phase: 'uploading',
+        downloadMbps: finalDownloadMbps,
         downloadedBytes: totalDownloadedBytes,
         loadedLatencyMs: prev.loadedLatencyMs ?? prev.unloadedLatencyMs,
         progressPct: 56,
