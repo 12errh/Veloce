@@ -1,7 +1,6 @@
 'use client';
 
 import React, {useState} from 'react';
-import {X} from 'lucide-react';
 import {AnimatePresence, motion, MotionConfig} from 'motion/react';
 import {TRANSLATIONS} from '@/lib/i18n';
 import {computeStabilityPct} from '@/lib/speedtest-math';
@@ -173,26 +172,20 @@ export function FastSpeedTestApp() {
             exit={{opacity: 0}}
             transition={{duration: 0.18}}
             onClick={handleToggleDetails}
-            className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-40 flex items-center justify-center bg-black/75 backdrop-blur-md p-4"
           >
             <motion.div
               key="more-info-card"
-              initial={{opacity: 0, scale: 0.96, y: 12}}
+              initial={{opacity: 0, scale: 0.94, y: 16}}
               animate={{opacity: 1, scale: 1, y: 0}}
-              exit={{opacity: 0, scale: 0.96, y: 12}}
-              transition={{duration: 0.22, ease: [0.16, 1, 0.3, 1]}}
+              exit={{opacity: 0, scale: 0.94, y: 16}}
+              transition={{duration: 0.26, ease: [0.16, 1, 0.3, 1]}}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[880px] max-h-[85vh] overflow-y-auto"
+              className="relative w-full max-w-[900px] max-h-[85vh] overflow-y-auto rounded-2xl border border-[#2D2A2E] bg-gradient-to-b from-[#141418] to-[#0B0B0F] shadow-[0_40px_120px_rgba(0,0,0,0.85)]"
             >
-              <button
-                type="button"
-                onClick={handleToggleDetails}
-                aria-label="Close detailed telemetry"
-                className="absolute top-3 right-3 z-10 p-1.5 rounded-[4px] text-[#9C968B] hover:text-[#F3EFE6] hover:bg-[#1B1A20] transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" aria-hidden="true" />
-              </button>
-              <WieckerTelemetryDrawer
+              <div className="sticky top-0 z-20 h-[3px] w-full bg-gradient-to-r from-[#7F1D1D] via-[#DC2626] to-[#C5A059] rounded-t-2xl" />
+              <div className="px-5 sm:px-7 pt-5 pb-6">
+                <WieckerTelemetryDrawer
                   state={state}
                   settings={settings}
                   settingsOpen={settingsOpen}
@@ -203,8 +196,10 @@ export function FastSpeedTestApp() {
                   }}
                   onShare={() => setActiveModal('share')}
                   onExportJson={handleExportJson}
+                  onClose={handleToggleDetails}
                   t={t}
                 />
+              </div>
             </motion.div>
           </motion.div>
         )}

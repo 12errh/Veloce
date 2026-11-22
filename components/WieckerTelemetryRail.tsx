@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {ArrowDown, ArrowUp, ChevronUp, Flame} from 'lucide-react';
+import {Activity, ArrowDown, ArrowUp, ChevronUp, Flame} from 'lucide-react';
 import {motion} from 'motion/react';
 import {buildSparklinePath, formatSpeedValue} from '@/lib/speedtest-math';
 import {SpeedTestState} from '@/hooks/use-speed-test';
@@ -220,10 +220,10 @@ export function WieckerDataStrip({
         data-state={detailsExpanded ? 'open' : 'closed'}
         aria-label={
           detailsExpanded
-            ? 'Hide advanced metrics and settings'
-            : 'Show more info and settings'
+            ? 'Close detailed telemetry'
+            : 'Open detailed telemetry'
         }
-        title={detailsExpanded ? 'Hide detailed telemetry' : 'Show detailed telemetry'}
+        title={detailsExpanded ? 'Close detailed telemetry' : 'Open detailed telemetry'}
         data-testid="show-more-info"
         initial={{scale: 0, opacity: 0}}
         animate={{scale: 1, opacity: 1}}
@@ -236,10 +236,8 @@ export function WieckerDataStrip({
             : 'bg-[#991B1B] hover:bg-[#B91C1C] border border-[#DC2626]/40 shadow-[0_6px_18px_rgba(153,27,27,0.45)]'
         }`}
       >
-        <ArrowDown
-          className={`w-4 h-4 stroke-[2.5] transition-transform duration-300 ease-out ${
-            detailsExpanded ? 'rotate-180' : 'rotate-0'
-          }`}
+        <Activity
+          className="w-4 h-4 stroke-[2.2] transition-transform duration-300 ease-out"
           aria-hidden="true"
         />
       </motion.button>

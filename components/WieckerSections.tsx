@@ -20,6 +20,7 @@ interface DetailedDrawerProps {
   onSaveSettings: (next: SpeedTestSettings) => void;
   onShare: () => void;
   onExportJson: () => void;
+  onClose?: () => void;
   t: TranslationStrings;
 }
 
@@ -31,6 +32,7 @@ export function WieckerTelemetryDrawer({
   onSaveSettings,
   onShare,
   onExportJson,
+  onClose,
   t,
 }: DetailedDrawerProps) {
   const down = formatSpeedValue(state.downloadMbps);
@@ -85,6 +87,17 @@ export function WieckerTelemetryDrawer({
             <Download className="w-3.5 h-3.5 text-[#C5A059]" aria-hidden="true" />
             <span>Export JSON</span>
           </button>
+
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close detailed telemetry"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-[4px] text-[#9C968B] border border-[#2F2D33] bg-[#16161B] hover:text-[#F3EFE6] hover:bg-[#1E1D24] hover:border-[#C5A059]/60 transition-colors cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" aria-hidden="true" />
+            </button>
+          )}
 
           <button
             type="button"
