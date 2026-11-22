@@ -1,6 +1,6 @@
 {
-  "name": "Fast.com Speed Test",
-  "description": "Simple, instant Internet speed test measuring download speed, upload speed, and unloaded/loaded latency.",
+  "name": "Veloce",
+  "description": "High-precision internet speed test and real-time network telemetry web application.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
