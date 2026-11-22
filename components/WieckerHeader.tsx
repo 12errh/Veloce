@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
-import {Github, RotateCw} from 'lucide-react';
+import {Github} from 'lucide-react';
 import {motion} from 'motion/react';
 
 interface AppHeaderProps {
-  onRestartTest: () => void;
   onOpenPrivacy: () => void;
 }
 
@@ -32,10 +31,7 @@ function describeArc(
   return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`;
 }
 
-export function WieckerHeader({
-  onRestartTest,
-  onOpenPrivacy,
-}: AppHeaderProps) {
+export function WieckerHeader({onOpenPrivacy}: AppHeaderProps) {
   const cx = 16;
   const cy = 16;
   const arcRadius = 11;
@@ -154,6 +150,18 @@ export function WieckerHeader({
 
         {/* Minimal Real Controls assemble from top */}
         <div className="flex items-center gap-4 sm:gap-5 shrink-0">
+          <motion.button
+            type="button"
+            onClick={onOpenPrivacy}
+            data-testid="privacy-button"
+            initial={{opacity: 0, y: -10}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.4, delay: 0.18, ease: EASE_OUT}}
+            className="text-[13px] font-medium text-[#9C968B] hover:text-[#F3EFE6] transition-colors cursor-pointer whitespace-nowrap py-1"
+          >
+            Privacy
+          </motion.button>
+
           <motion.a
             href="https://github.com/12errh/Veloce"
             target="_blank"
@@ -168,32 +176,6 @@ export function WieckerHeader({
           >
             <Github className="w-4 h-4" aria-hidden="true" />
           </motion.a>
-
-          <motion.button
-            type="button"
-            onClick={onOpenPrivacy}
-            data-testid="privacy-button"
-            initial={{opacity: 0, y: -10}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.4, delay: 0.18, ease: EASE_OUT}}
-            className="text-[13px] font-medium text-[#9C968B] hover:text-[#F3EFE6] transition-colors cursor-pointer whitespace-nowrap py-1"
-          >
-            Privacy
-          </motion.button>
-
-          <motion.button
-            type="button"
-            onClick={onRestartTest}
-            aria-label="Restart speed test"
-            data-testid="header-restart-button"
-            initial={{opacity: 0, y: -10, scale: 0.94}}
-            animate={{opacity: 1, y: 0, scale: 1}}
-            transition={{duration: 0.42, delay: 0.24, ease: EASE_OUT}}
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-[13px] font-medium text-[#F3EFE6] border border-[#2F2D33] rounded-[4px] bg-[#111115] hover:bg-[#19181E] hover:border-[#B91C1C] transition-colors cursor-pointer whitespace-nowrap"
-          >
-            <RotateCw className="w-3.5 h-3.5 text-[#C5A059]" aria-hidden="true" />
-            <span className="hidden sm:inline">Restart test</span>
-          </motion.button>
         </div>
       </div>
     </header>

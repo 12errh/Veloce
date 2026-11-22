@@ -90,7 +90,6 @@ export function FastSpeedTestApp() {
     <MotionConfig reducedMotion="user">
       <div className="h-screen overflow-hidden veloce-matte-bg text-[#F3EFE6] flex flex-col">
         <WieckerHeader
-          onRestartTest={restartTest}
           onOpenPrivacy={() => setActiveModal('privacy')}
         />
 

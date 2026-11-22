@@ -102,9 +102,11 @@ export const TRANSLATIONS: Record<LocaleCode, TranslationStrings> = {
     close: 'Close',
     privacyTitle: 'Privacy & Test Telemetry',
     privacyBody: [
-      'This speed test measures your connection throughput and latency directly between your browser and the active test server endpoints.',
-      'Your IP address is inspected solely to display client connection metadata and coordinate parallel streams during the active session.',
-      'Configuration changes are only persisted locally in your browser when "Save config for this device" is enabled.',
+      'Veloce measures your connection throughput and latency directly between your browser and this app\'s own speed-test endpoints. No third-party speed-test service is involved.',
+      'Your IP address and network metadata (ISP, organization, ASN, city, country) are read only to display your connection details and coordinate parallel streams during the active session. They are not stored or sold.',
+      'Speed-test payloads are generated in your browser and discarded by the server after measurement; no test results are persisted server-side.',
+      'Optional settings (stream concurrency, test duration, latency toggles) are saved only in your browser\'s local storage when "Save config for this device" is enabled, and can be cleared at any time.',
+      'Veloce does not use accounts, cookies for tracking, or analytics. The source code is open and auditable.',
     ],
     faqItems: [
       {
