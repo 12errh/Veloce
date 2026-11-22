@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html,
+  body {
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #070709;
+    color: #f3efe6;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.veloce-matte-bg {
+  background-color: #070709;
+  background-image:
+    radial-gradient(660px 520px at 10% 74%, rgba(153, 27, 27, 0.15), transparent 72%),
+    radial-gradient(520px 420px at 50% 58%, rgba(127, 29, 29, 0.10), transparent 70%),
+    radial-gradient(460px 360px at 88% 16%, rgba(197, 160, 89, 0.06), transparent 74%);
+}
+
+@keyframes fast-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fast-spin {
+  animation: fast-spin 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fast-spin {
+    animation: none;
+  }
+}
