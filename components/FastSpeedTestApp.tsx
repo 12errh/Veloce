@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useState} from 'react';
+import {X} from 'lucide-react';
 import {AnimatePresence, motion, MotionConfig} from 'motion/react';
 import {TRANSLATIONS} from '@/lib/i18n';
 import {computeStabilityPct} from '@/lib/speedtest-math';
@@ -95,14 +96,13 @@ export function FastSpeedTestApp() {
         />
 
         {/* Hero Speedometer Stage Only */}
-        <main className="relative flex-1 overflow-y-auto overflow-x-clip scroll-smooth">
+        <main className="relative flex-1 flex flex-col justify-center overflow-hidden">
           <WieckerBackdropCurves
             stabilityPct={stabilityPct}
             completionPct={completionPct}
           />
 
-          <div className="min-h-full flex flex-col justify-center">
-            <div className="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-2 sm:pt-5 pb-8 sm:pb-10">
+          <div className="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-2 sm:pt-5 pb-8 sm:pb-10">
             {/* Hero Headline assembles cleanly with upward clip reveal */}
             <motion.div
               initial={{opacity: 0, y: 20, clipPath: 'inset(0 0 100% 0)'}}
@@ -160,27 +160,55 @@ export function FastSpeedTestApp() {
             </div>
           </div>
 
-          {/* Expandable Detailed Telemetry & Settings Drawer */}
-          <AnimatePresence>
-            {isExpanded && (
-              <WieckerTelemetryDrawer
-                state={state}
-                settings={settings}
-                settingsOpen={settingsOpen}
-                onToggleSettings={() => setSettingsOpen((v) => !v)}
-                onSaveSettings={(next) => {
-                  applySettings(next);
-                  setSettingsOpen(false);
-                }}
-                onShare={() => setActiveModal('share')}
-                onExportJson={handleExportJson}
-                t={t}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-        </div>
+          </div>
       </main>
+
+      {/* More Info Card Overlay */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            key="more-info-overlay"
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.18}}
+            onClick={handleToggleDetails}
+            className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              key="more-info-card"
+              initial={{opacity: 0, scale: 0.96, y: 12}}
+              animate={{opacity: 1, scale: 1, y: 0}}
+              exit={{opacity: 0, scale: 0.96, y: 12}}
+              transition={{duration: 0.22, ease: [0.16, 1, 0.3, 1]}}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-[880px] max-h-[85vh] overflow-y-auto"
+            >
+              <button
+                type="button"
+                onClick={handleToggleDetails}
+                aria-label="Close detailed telemetry"
+                className="absolute top-3 right-3 z-10 p-1.5 rounded-[4px] text-[#9C968B] hover:text-[#F3EFE6] hover:bg-[#1B1A20] transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+              <WieckerTelemetryDrawer
+                  state={state}
+                  settings={settings}
+                  settingsOpen={settingsOpen}
+                  onToggleSettings={() => setSettingsOpen((v) => !v)}
+                  onSaveSettings={(next) => {
+                    applySettings(next);
+                    setSettingsOpen(false);
+                  }}
+                  onShare={() => setActiveModal('share')}
+                  onExportJson={handleExportJson}
+                  t={t}
+                />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <InfoModal
         kind={activeModal}
