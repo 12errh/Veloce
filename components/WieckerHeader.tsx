@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {RotateCw} from 'lucide-react';
+import {Github, RotateCw} from 'lucide-react';
 import {motion} from 'motion/react';
 
 interface AppHeaderProps {
@@ -154,6 +154,21 @@ export function WieckerHeader({
 
         {/* Minimal Real Controls assemble from top */}
         <div className="flex items-center gap-4 sm:gap-5 shrink-0">
+          <motion.a
+            href="https://github.com/12errh/Veloce"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View source code on GitHub"
+            title="View source on GitHub"
+            data-testid="github-link"
+            initial={{opacity: 0, y: -10, scale: 0.94}}
+            animate={{opacity: 1, y: 0, scale: 1}}
+            transition={{duration: 0.42, delay: 0.12, ease: EASE_OUT}}
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-[4px] border border-[#2F2D33] bg-[#111115] text-[#9C968B] hover:text-[#F3EFE6] hover:border-[#C5A059] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C5A059]"
+          >
+            <Github className="w-4 h-4" aria-hidden="true" />
+          </motion.a>
+
           <motion.button
             type="button"
             onClick={onOpenPrivacy}
