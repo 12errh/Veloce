@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 import {Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono} from 'next/font/google';
 import './globals.css';
 
@@ -23,21 +23,31 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+export const viewport: Viewport = {
+  themeColor: '#070709',
+  colorScheme: 'dark',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: 'Veloce — Internet Speed Test & Latency Telemetry',
+  title: 'Veloce — Internet Speed Test & Network Telemetry',
   description:
-    'Measure real-time download speed, upload throughput, unloaded and loaded ping, and live network data transfer.',
+    'High-precision internet speed test and real-time network telemetry. Measures download throughput, upload bandwidth, unloaded and loaded latency, and connection jitter through a calibrated 260° speedometer.',
+  applicationName: 'Veloce',
+  colorScheme: 'dark',
   openGraph: {
-    title: 'Veloce — Internet Speed Test & Latency Telemetry',
+    title: 'Veloce — Internet Speed Test & Network Telemetry',
     description:
-      'Measure real-time download speed, upload throughput, unloaded and loaded ping.',
+      'High-precision internet speed test and real-time network telemetry.',
     type: 'website',
+    siteName: 'Veloce',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Veloce — Internet Speed Test & Latency Telemetry',
+    title: 'Veloce — Internet Speed Test & Network Telemetry',
     description:
-      'Measure real-time download speed, upload throughput, unloaded and loaded ping.',
+      'High-precision internet speed test and real-time network telemetry.',
   },
 };
 
