@@ -111,10 +111,6 @@ npx --yes tsx --test lib/speedtest-math.test.ts
 | `/api/speedtest/ping` | GET / HEAD | Low-overhead round-trip latency & jitter probe |
 | `/api/speedtest/info` | GET | Client IP, ISP, ASN, and geolocation lookup |
 
-## Topics
-
-`speed-test` · `network-telemetry` · `bandwidth-monitor` · `latency` · `jitter` · `nextjs` · `react` · `typescript` · `tailwindcss` · `motion` · `dark-ui`
-
 ---
 
 <p align="center">
