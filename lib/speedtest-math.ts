@@ -14,10 +14,10 @@ export interface SpeedTestSettings {
 }
 
 export const DEFAULT_SETTINGS: SpeedTestSettings = {
-  minConnections: 1,
-  maxConnections: 8,
-  minDurationSec: 5,
-  maxDurationSec: 30,
+  minConnections: 4,
+  maxConnections: 12,
+  minDurationSec: 10,
+  maxDurationSec: 20,
   measureLoadedLatencyDuringUpload: true,
   alwaysShowAllMetrics: false,
   saveConfigForDevice: false,

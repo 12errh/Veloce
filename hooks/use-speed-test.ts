@@ -391,15 +391,13 @@ export function useSpeedTest() {
       if (runId !== runIdRef.current) return;
 
       const finalUploadMbps = (() => {
-        const slice = recentBuckets.slice(-5);
+        const slice = recentBuckets.slice(-8);
         if (slice.length === 0) return latestMbps;
         const sorted = [...slice].sort((a, b) => a - b);
-        const mid = Math.floor(sorted.length / 2);
-        const med =
-          sorted.length % 2 === 0
-            ? (sorted[mid - 1] + sorted[mid]) / 2
-            : sorted[mid];
-        return med > 0 ? med : latestMbps;
+        // 90th percentile ~ peak sustained capability (closer to fast.com reporting)
+        const idx = Math.min(sorted.length - 1, Math.ceil(sorted.length * 0.9) - 1);
+        const p90 = sorted[idx];
+        return p90 > 0 ? p90 : latestMbps;
       })();
 
       setState((prev) => ({
@@ -492,6 +490,23 @@ export function useSpeedTest() {
       }));
 
       void infoPromise;
+
+      // TCP/TLS warmup: pre-saturate the connection so slow-start doesn't skew the measurement
+      try {
+        const warmupRes = await fetch(
+          `/api/speedtest/download?bytes=2097152&r=${Math.random().toString(36).slice(2)}`,
+          {cache: 'no-store', signal: controller.signal}
+        );
+        if (warmupRes.body) {
+          const reader = warmupRes.body.getReader();
+          while (true) {
+            const {done} = await reader.read();
+            if (done) break;
+          }
+        }
+      } catch {
+        // Warmup failure is non-fatal
+      }
 
       // Step 2: Parallel Download Throughput + Loaded Latency
       const startTime = performance.now();
@@ -652,15 +667,12 @@ export function useSpeedTest() {
       }
 
       const finalDownloadMbps = (() => {
-        const slice = recentBuckets.slice(-6);
+        const slice = recentBuckets.slice(-8);
         if (slice.length === 0) return latestMbps;
         const sorted = [...slice].sort((a, b) => a - b);
-        const mid = Math.floor(sorted.length / 2);
-        const med =
-          sorted.length % 2 === 0
-            ? (sorted[mid - 1] + sorted[mid]) / 2
-            : sorted[mid];
-        return med > 0 ? med : latestMbps;
+        const idx = Math.min(sorted.length - 1, Math.ceil(sorted.length * 0.9) - 1);
+        const p90 = sorted[idx];
+        return p90 > 0 ? p90 : latestMbps;
       })();
 
       setState((prev) => ({
