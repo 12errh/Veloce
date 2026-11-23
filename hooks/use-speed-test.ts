@@ -343,8 +343,8 @@ export function useSpeedTest() {
 
           // Exclude initial 350ms OS TCP buffer fill burst once enough steady samples exist
           const steadySamples =
-            elapsed > 1500
-              ? samples.filter((s) => s.timestampMs - startTime >= 1000)
+            elapsed > 1000
+              ? samples.filter((s) => s.timestampMs - startTime >= 500)
               : samples;
           const activeSamples = steadySamples.length >= 2 ? steadySamples : samples;
 
@@ -375,7 +375,7 @@ export function useSpeedTest() {
           }));
 
           const converged =
-            elapsed >= minMs && hasThroughputConverged(recentBuckets, 5, 0.09);
+            elapsed >= minMs && hasThroughputConverged(recentBuckets, 4, 0.10);
           if (elapsed >= maxMs || converged) {
             stopped = true;
             window.clearInterval(tick);
@@ -391,7 +391,7 @@ export function useSpeedTest() {
       if (runId !== runIdRef.current) return;
 
       const finalUploadMbps = (() => {
-        const slice = recentBuckets.slice(-8);
+        const slice = recentBuckets.slice(-5);
         if (slice.length === 0) return latestMbps;
         const sorted = [...slice].sort((a, b) => a - b);
         // 90th percentile ~ peak sustained capability (closer to fast.com reporting)
@@ -494,7 +494,7 @@ export function useSpeedTest() {
       // TCP/TLS warmup: pre-saturate the connection so slow-start doesn't skew the measurement
       try {
         const warmupRes = await fetch(
-          `/api/speedtest/download?bytes=2097152&r=${Math.random().toString(36).slice(2)}`,
+          `/api/speedtest/download?bytes=1048576&r=${Math.random().toString(36).slice(2)}`,
           {cache: 'no-store', signal: controller.signal}
         );
         if (warmupRes.body) {
@@ -610,8 +610,8 @@ export function useSpeedTest() {
           if (samples.length > 90) samples.shift();
 
           const steadySamples =
-            elapsed > 1500
-              ? samples.filter((s) => s.timestampMs - startTime >= 1000)
+            elapsed > 1000
+              ? samples.filter((s) => s.timestampMs - startTime >= 500)
               : samples;
           const activeSamples = steadySamples.length >= 2 ? steadySamples : samples;
 
@@ -642,7 +642,7 @@ export function useSpeedTest() {
           }));
 
           const converged =
-            elapsed >= minMs && hasThroughputConverged(recentBuckets, 6, 0.08);
+            elapsed >= minMs && hasThroughputConverged(recentBuckets, 4, 0.10);
           if (elapsed >= maxMs || converged || (failedStreams > 4 && totalDownloadedBytes === 0)) {
             stopped = true;
             window.clearInterval(ticker);
@@ -667,7 +667,7 @@ export function useSpeedTest() {
       }
 
       const finalDownloadMbps = (() => {
-        const slice = recentBuckets.slice(-8);
+        const slice = recentBuckets.slice(-5);
         if (slice.length === 0) return latestMbps;
         const sorted = [...slice].sort((a, b) => a - b);
         const idx = Math.min(sorted.length - 1, Math.ceil(sorted.length * 0.9) - 1);
