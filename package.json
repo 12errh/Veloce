@@ -21,6 +21,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "preview": "next start",
     "lint": "eslint .",
     "clean": "next clean"
   },

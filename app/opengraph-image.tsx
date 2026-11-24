@@ -1,6 +1,5 @@
 import {ImageResponse} from 'next/og';
 
-export const runtime = 'edge';
 export const alt = 'Veloce — Internet Speed Test & Network Telemetry';
 export const size = {width: 1200, height: 630};
 export const contentType = 'image/png';
@@ -16,8 +15,9 @@ export default function OpenGraphImage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background:
-            'radial-gradient(900px 600px at 15% 80%, rgba(153,27,27,0.22), transparent 70%), radial-gradient(700px 500px at 85% 20%, rgba(197,160,89,0.10), transparent 70%), #070709',
+          backgroundColor: '#070709',
+          backgroundImage:
+            'radial-gradient(900px 600px at 15% 80%, rgba(153,27,27,0.22), transparent 70%), radial-gradient(700px 500px at 85% 20%, rgba(197,160,89,0.10), transparent 70%)',
           color: '#F3EFE6',
           fontFamily: 'sans-serif',
         }}
